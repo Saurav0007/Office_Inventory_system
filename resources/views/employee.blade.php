@@ -10,53 +10,36 @@
                 <body>
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-md-2">
-                                @include('navbar')
-                            </div>
+                            <nav>
+                                @include('navbar');
+                            </nav>
+                            <div class="col-md-2"></div>
+                            
                             <div class="col-md-8">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4> Insert Details of inventory</h4>
-                                        <form method="post" action="/empForm">
-                                            @csrf
-
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="name" placeholder="name">
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="address" placeholder="address">
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="phone" placeholder="number">
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" name="designation" placeholder="Designation">
-                                            </div>
-                                            <button class="btn btn-success" type="submit"> Submit </button>
-                                        </form>
-                                    </div>
-                                    <div class="card-body">
-                                        <table class="table">
-                                            <h1>employee Table</h1>
+                               
+                                <div class="table-responsive">
+                                    <table class="table table-striped" >
+                                            <h1>For Variable type Product</h1>
                                             <thead>
-                                                <th> name</th>
-                                                <th>Address</th>
-                                                <th>phone Number</th>
-                                                <th>Designation</th>
+                                                <th>Name</th>
+                                                <th>Floor</th>
+                                                <th>Room</th>
+                                                <th>Bed Number</th>
                                             </thead>
                                             <tbody>
-                                                @foreach ($value as $val)
+                                                @foreach ($data as $val)
                                                 <tr>
-                                                    <td>{{$val['name']}}</td>
-                                                    <td>{{$val['address']}}</td>
-                                                    <td>{{$val['phone']}}</td>
-                                                    <td>{{$val['designation']}}</td>
+                                                    <td>{{$val['userName']}}</td>
+                                                    <td>{{$val['floor']}}</td>
+                                                    <td>{{$val['room']}}</td>
+                                                    <td>{{$val['bedNumber']}}</td>
+                                                
                                                </tr> 
                                                 @endforeach
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
+                               
 
                             </div>
                         </div>

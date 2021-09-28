@@ -17,6 +17,12 @@ class CreateEmpSelectedDataTable extends Migration
             $table->id();
             $table->string('selectedData');
             $table->string('emp_id');
+            $table->string('userName');
+            $table->string('floor');
+            $table->string('room');
+            $table->string('bedNumber');
+            $table->string('designation');
+            $table->string('phone');
             $table->timestamps();
         });
     }

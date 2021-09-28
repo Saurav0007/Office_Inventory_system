@@ -15,24 +15,28 @@
                             </nav>
                             <div class="col-md-2"></div>
                             <div class="col-md-8">
-                                <div class="card">
-                                    <h3>Search Results</h3>
-                                    <div class="card-body">
-                                        @if($posts->isNotEmpty())
-                                        @foreach ($posts as $post)
-                                            <div class="post-list">
-                                                <li>{{ $post->type }}</li>
-                                                <li>{{ $post->brand }}</li>
-                                                <li>{{ $post->description }}</li>
-                                            </div>
-                                        @endforeach
-                                    @else 
-                                        <div>
-                                            <h2>No data found</h2>
-                                        </div>
-                                    @endif
+                               
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                            <h1>For Fixed product</h1>
+                                            <thead>
+                                                <th>Name</th>
+                                                <th>Designation</th>
+                                                <th>phone Number</th>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($data as $val)
+                                                <tr>
+                                                    <td>{{$val['userName']}}</td>
+                                                    <td>{{$val['designation']}}</td>
+                                                    <td>{{$val['phone']}}</td>
+                                                
+                                               </tr> 
+                                                @endforeach
+                                            </tbody>
+                                        </table>
                                     </div>
-                                </div>
+                               
 
                             </div>
                         </div>

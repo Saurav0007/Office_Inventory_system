@@ -26,13 +26,18 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-2">
-                @include('navbar')
-            </div>
+            <nav>
+                @include('navbar');
+            </nav>
+            <div class="col-md-2"></div>
             <div class="col-md-8">
-                <div class="card">
+               
                     <div class="card-body">
                         <h1> Insert Details of inventory</h1>
+                        <form  method="GET" action="{{ route('search') }}" class="form-group">
+                            <input type="text" name="search" required/>
+                            <button type="submit" class="btn btn-success">Search</button>
+                        </form>
                         <form method="post" action="/submitForm">
                             @csrf
                             <div class="form-group">
@@ -83,8 +88,8 @@
                             <button class="btn btn-success" type="submit"> Submit </button>
                         </form>
                     </div>
-                    <div class="card-body">
-                        <table class="table">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
                             <h1>Data Table</h1>
                             <thead>
                                 <th>Item-id</th>
@@ -117,9 +122,16 @@
                                         <td>{{ $value->ex_date }}</td>
                                         <td>{{ $value->total_stock - count($stockout) }}</td>
                                         <td>{{ $value->entry_date }}</td>
-                                        <td><a href="#" data-toggle="modal"
-                                                data-target="#assign{{ $value->id }}"><button
-                                                    class="btn btn-success"> Assign</button></a>
+                                        <td>
+                                        
+                                                    <a href="#" data-toggle="modal"
+                                                        data-target="#variable{{ $value->id }}"><button
+                                                        class="btn btn-success"> Variable</button></a>
+                                                    /
+                                                    <a href="#" data-toggle="modal"
+                                                data-target="#fixed{{ $value->id }}"><button
+                                                    class="btn btn-success"> Fixed</button></a>
+
                                             / <a href="deleteData{{ $value->id }}"><button
                                                     class="btn btn-danger">Delete</button></a>
                                             {{-- / <a href="/get-details/{{ $value->id }}"><button class="btn"
@@ -131,16 +143,18 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
+               
 
             </div>
             {{-- bootstrap modal starts --}}
+           
+
             @foreach ($data as $value)
-                <div class="modal" tabindex="-1" id="assign{{ $value->id }}" role="dialog">
+                <div class="modal" tabindex="-1" id="variable{{ $value->id }}" role="dialog">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title">Modal title</h5>
+                                <h5 class="modal-title">Product Assign here</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -149,7 +163,7 @@
                                 <form action="/empSelect" method="POST">
                                     @csrf
                                     <input type="hidden" name="selectedData" value="{{ $value->id }}">
-                                    <select name="emp_id" id="">
+                                    {{-- <select name="emp_id" id="">
                                         <option value="0">Select One</option>
 
                                         @if (!empty($emp))
@@ -158,23 +172,83 @@
                                                     {{ $em['name'] }}-{{ $em['phone'] }}</option>
                                             @endforeach
                                         @endif
-                                    </select>
-                                    <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary">Save changes</button>
+                                    </select> --}}
+                                    <div class="form-group">
+                                        <input type="text" name="userName" class="form-control" placeholder="Enter User Name">
                                     </div>
-
-                                </form>
+                                    <div class="form-group">
+                                        <input type="number" name="floor" class="form-control" placeholder="Floor Number">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" name="room" class="form-control" placeholder="Room Number">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" name="bed" class="form-control" placeholder="Bed Number">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" name="designation" class="form-control" placeholder="Designation">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" name="phone" class="form-control" placeholder="phone number">
+                                    </div>
+                                
                             </div>
                             <div class="modal-footer">
-
+                                <button type="submit" class="btn btn-primary">Save changes</button>
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             </div>
+                        </form>
                         </div>
                     </div>
                 </div>
             @endforeach
 
 
+            {{-- second Modal for assign --}}
+            @foreach ($data as $value)
+            <div class="modal" tabindex="-1" id="fixed{{ $value->id }}" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Product for employee Assign here</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="/fixedData" method="POST">
+                                @csrf
+                                <input type="hidden" name="selectedData" value="{{ $value->id }}">
+                                {{-- <select name="emp_id" id="">
+                                    <option value="0">Select One</option>
+
+                                    @if (!empty($emp))
+                                        @foreach ($emp as $em)
+                                            <option value="{{ $em['id'] }}">
+                                                {{ $em['name'] }}-{{ $em['phone'] }}</option>
+                                        @endforeach
+                                    @endif
+                                </select> --}}
+                                <div class="form-group">
+                                    <input type="text" name="userName" class="form-control" placeholder="Enter User Name">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="designation" class="form-control" placeholder="Designation">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" name="phone" class="form-control" placeholder="phone number">
+                                </div>
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        @endforeach
 
 
 

@@ -10,9 +10,10 @@
             <body>
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-md-2">
-                                @include('navbar')
-                            </div>
+                            <nav>
+                                @include('navbar');
+                            </nav>
+                            <div class="col-md-2"></div>
                             <div class="col-md-8">
                                 <div class="card">
                                     <div class="card-body">

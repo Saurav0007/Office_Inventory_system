@@ -34,7 +34,8 @@ Route::get('/type',function(){
 });
 Route::get('/employee',function(){
     $value = employee::all();
-    return view('employee',compact('value'));
+    $data = empSelectedData::all();
+    return view('employee',compact('value','data'));
 });
 Route::get('/details',function(){
     $value = inventory::all();
@@ -43,12 +44,16 @@ Route::get('/details',function(){
     return view('details',compact('value'));
 });
 
+Route::get('/fixEmployye',function(){
+    $data = empSelectedData::all();
+    return view('fixEmployee',compact('data'));
+});
 Route::Get('get-product-name-by-type','TypeController@getProductNameByType')->name('get-product-name-by-type');
-
+Route::get('/search/','InventoryController@search')->name('search');
 
 Route::post('/submitForm',"InventoryController@inventoryDetails");
 Route::post('/submitType',"TypeController@productType");
-Route::post('/empForm',"EmployeeController@employeeData");
+Route::post('/fixedData',"EmployeeController@employeeData");
 Route::post('/empSelect',"InventoryController@empDataSub");
 Route::get('deleteData{id}',"InventoryController@delete");
 Route::get('/get-details/{id}',"InventoryController@getDetails");

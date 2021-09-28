@@ -29,7 +29,13 @@ class InventoryController extends Controller
     public function empDataSub(Request $request){
         $new = new empSelectedData();
         $new->selectedData=$request->input('selectedData');
-        $new->emp_id=$request->input('emp_id');
+        $new->userName=$request->input('userName');
+        $new->floor=$request->input('floor');
+        $new->room=$request->input('room');
+        $new->bedNumber=$request->input('bed');
+        $new->designation=$request->input('designation');
+        $new->phone=$request->input('phone');
+        // $new->emp_id=$request->input('emp_id');
         $new->save();
         return redirect('/');
     }
@@ -39,10 +45,20 @@ class InventoryController extends Controller
         return redirect('/');
     }
     
-    // public function getDetails($id){
-    //     $userList =  DB::table('inventories')
-    //     ->join('emp_selected_data','emp_selected_data.selectedData','inventories.id')
-    //     ->join('employees','emp_selected_data.emp_id','employees.id')->where('inventories.id',$id)->get();
-    //     return redirect('/details');
-    // }
+    public function getDetails($id){
+        $userList =  DB::table('inventories')
+        ->join('emp_selected_data','emp_selected_data.selectedData','inventories.id')
+        ->join('employees','emp_selected_data.emp_id','employees.id')->where('inventories.id',$id)->get();
+        dd($userList);
+    }
+
+    public function search(Request $request){
+        $search = $request->input('search');
+    
+        $posts = inventory::query()
+            ->where('item_id', 'LIKE', "%{$search}%")
+            ->get();
+    
+        return view('/details', compact('posts'));
+    }
 }
